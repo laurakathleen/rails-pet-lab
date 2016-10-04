@@ -12,8 +12,18 @@ RSpec.describe Pet, type: :model do
   describe Pet do
     # TODO: test that it requires (validates the presence of) name
     # TODO: that it validates the length of the name is <= 255
-
     # TODO: test that it requires breed
+    it { should validate_presence_of(:name) }
+    it { should validate_length_of(:name).is_at_most(255) }
+
+    it { should validate_presence_of(:breed) }
+
+    context "when validating an email" do
+      it "contains an @ symbol" do
+        owner.email = "asdf"
+        expect{owner.save!}.to raise_error ActiveRecord::RecordInvalid
+      end
+    end
   end
 
 end
